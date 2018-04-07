@@ -19,7 +19,8 @@ let g:step = 20
 function! FoldJump()
     let l:result = 'j'
     let b:line = line(".")
-    let l:count = 0
+    let l:upCount = 0
+    let l:downCount = 0
     while l:result ==# 'j' || l:result ==# 'k'
         let l:result = ''
         while l:result == ''
@@ -31,20 +32,21 @@ function! FoldJump()
             echom 'hit'
         endif
         
-        let l:lowerRange = l:count + 1
-        let l:upperRange = l:count + 1 + g:step
         if l:result ==# 'j'
+            let l:lowerRange = l:downCount + 1
+            let l:upperRange = l:downCount + 1 + g:step
+            exec "normal! zt"
             exec ".+" . l:lowerRange . ",.+" . l:upperRange . "fold"
-            exec ".-" . l:upperRange. ",.-" . l:lowerRange . "fold"
-            exec "normal! z."
+            let l:downCount = l:downCount + g:step
             redraw
         elseif l:result ==# 'k'
-            exec ".+" . l:lowerRange . ",.+" . l:upperRange . "fold"
+            let l:lowerRange = l:upCount + 1
+            let l:upperRange = l:upCount + 1 + g:step
             exec ".-" . l:upperRange. ",.-" . l:lowerRange . "fold"
-            exec "normal! z."
+            exec "normal! z-"
+            let l:upCount = l:upCount + g:step
             redraw
         endif
-        let l:count = l:count + g:step
     endwhile
 endfunction
 
