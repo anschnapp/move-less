@@ -21,15 +21,14 @@ function! FoldJump()
     let b:line = line(".")
     let l:upCount = 0
     let l:downCount = 0
-    while l:result ==# 'j' || l:result ==# 'k'
+    while l:result ==# 'j' || l:result ==# 'k' || l:result ==# 'l'
         let l:result = ''
         while l:result == ''
             let l:result = nr2char(getchar(1))
         endwhile
         
-        if l:result ==# 'j' || l:result ==# 'k'
+        if l:result ==# 'j' || l:result ==# 'k' || l:result ==# 'l'
             let l:result = nr2char(getchar())
-            echom 'hit'
         endif
         
         if l:result ==# 'j'
@@ -45,6 +44,17 @@ function! FoldJump()
             exec ".-" . l:upperRange. ",.-" . l:lowerRange . "fold"
             exec "normal! z-"
             let l:upCount = l:upCount + g:step
+            redraw
+        elseif l:result ==# 'l'
+            let l:lowerRangeDown = l:downCount + 1
+            let l:upperRangeDown = l:downCount + 1 + g:step
+            let l:lowerRangeUp = l:upCount + 1
+            let l:upperRangeUp = l:upCount + 1 + g:step
+            exec ".+" . l:lowerRangeDown. ",.+" . l:upperRangeDown. "fold"
+            exec ".-" . l:upperRangeUp .  ",.-" . l:lowerRangeUp . "fold"
+            exec "normal! z."
+            let l:upCount = l:upCount + g:step
+            let l:downCount = l:downCount + g:step
             redraw
         endif
     endwhile
