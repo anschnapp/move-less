@@ -53,18 +53,20 @@ function! FoldJump()
                 redraw
             endif
         elseif l:result ==# 'l'
-            if (b:line - l:firstLine - l:upCount > &scroll/2) && (b:line - l:firstLine - l:upCount > &scroll/2)  
-                let l:lowerRangeDown = l:downCount + 1
-                let l:upperRangeDown = l:downCount + 1 + &scroll/2
-                let l:lowerRangeUp = l:upCount + 1
-                let l:upperRangeUp = l:upCount + 1 + &scroll/2
-                exec ".+" . l:lowerRangeDown. ",.+" . l:upperRangeDown. "fold"
-                exec ".-" . l:upperRangeUp .  ",.-" . l:lowerRangeUp . "fold"
-                exec "normal! z."
-                let l:upCount = l:upCount + &scroll/2
+            if l:endLine - b:line - l:downCount > &scroll/2  
+                let l:lowerRange = l:downCount + 1
+                let l:upperRange = l:downCount + 1 + &scroll/2
+                exec ".+" . l:lowerRange . ",.+" . l:upperRange . "fold"
                 let l:downCount = l:downCount + &scroll/2
-                redraw
             endif
+            if b:line - l:firstLine - l:upCount > &scroll/2  
+                let l:lowerRange = l:upCount + 1
+                let l:upperRange = l:upCount + 1 + &scroll/2
+                exec ".-" . l:upperRange .  ",.-" . l:lowerRange . "fold"
+                let l:upCount = l:upCount + &scroll/2
+            endif
+            exec "normal! z."
+            redraw
         endif
     endwhile
 endfunction
