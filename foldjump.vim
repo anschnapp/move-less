@@ -14,7 +14,6 @@ augroup listenIfJumpsEnded
 	autocmd!
 	autocmd CursorMoved * call CheckAfterCursorChanges()
 augroup end 
-let g:step = 20
 
 function! FoldJump()
     let l:result = 'j'
@@ -30,32 +29,42 @@ function! FoldJump()
         if l:result ==# 'j' || l:result ==# 'k' || l:result ==# 'l'
             let l:result = nr2char(getchar())
         endif
+
+        let l:endLine = line("$")
+        let l:firstLine = 1
+
         
         if l:result ==# 'j'
-            let l:lowerRange = l:downCount + 1
-            let l:upperRange = l:downCount + 1 + g:step
-            exec "normal! zt"
-            exec ".+" . l:lowerRange . ",.+" . l:upperRange . "fold"
-            let l:downCount = l:downCount + g:step
-            redraw
+            if l:endLine - b:line - l:downCount > &scroll  
+                let l:lowerRange = l:downCount + 1
+                let l:upperRange = l:downCount + 1 + &scroll
+                exec "normal! zt"
+                exec ".+" . l:lowerRange . ",.+" . l:upperRange . "fold"
+                let l:downCount = l:downCount + &scroll
+                redraw
+            endif
         elseif l:result ==# 'k'
-            let l:lowerRange = l:upCount + 1
-            let l:upperRange = l:upCount + 1 + g:step
-            exec ".-" . l:upperRange. ",.-" . l:lowerRange . "fold"
-            exec "normal! z-"
-            let l:upCount = l:upCount + g:step
-            redraw
+            if b:line - l:firstLine - l:upCount > &scroll  
+                let l:lowerRange = l:upCount + 1
+                let l:upperRange = l:upCount + 1 + &scroll
+                exec ".-" . l:upperRange. ",.-" . l:lowerRange . "fold"
+                exec "normal! z-"
+                let l:upCount = l:upCount + &scroll
+                redraw
+            endif
         elseif l:result ==# 'l'
-            let l:lowerRangeDown = l:downCount + 1
-            let l:upperRangeDown = l:downCount + 1 + g:step
-            let l:lowerRangeUp = l:upCount + 1
-            let l:upperRangeUp = l:upCount + 1 + g:step
-            exec ".+" . l:lowerRangeDown. ",.+" . l:upperRangeDown. "fold"
-            exec ".-" . l:upperRangeUp .  ",.-" . l:lowerRangeUp . "fold"
-            exec "normal! z."
-            let l:upCount = l:upCount + g:step
-            let l:downCount = l:downCount + g:step
-            redraw
+            if (b:line - l:firstLine - l:upCount > &scroll/2) && (b:line - l:firstLine - l:upCount > &scroll/2)  
+                let l:lowerRangeDown = l:downCount + 1
+                let l:upperRangeDown = l:downCount + 1 + &scroll/2
+                let l:lowerRangeUp = l:upCount + 1
+                let l:upperRangeUp = l:upCount + 1 + &scroll/2
+                exec ".+" . l:lowerRangeDown. ",.+" . l:upperRangeDown. "fold"
+                exec ".-" . l:upperRangeUp .  ",.-" . l:lowerRangeUp . "fold"
+                exec "normal! z."
+                let l:upCount = l:upCount + &scroll/2
+                let l:downCount = l:downCount + &scroll/2
+                redraw
+            endif
         endif
     endwhile
 endfunction
