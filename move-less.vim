@@ -1,4 +1,5 @@
 function! CheckAfterCursorChanges() 
+    echom 'ping'
     if exists("b:line") && b:line
         let l:currentLine = line(".")
         if b:line != l:currentLine
@@ -6,14 +7,11 @@ function! CheckAfterCursorChanges()
             echom 'l:currentLine=' . l:currentLine
             let b:line = 0
             exec "normal zE"
+            autocmd! moveLessListenIfJumpsEnded CursorMoved <buffer>
         endif
     endif
 endfunction
-
-augroup listenIfJumpsEnded
-	autocmd!
-	autocmd CursorMoved * call CheckAfterCursorChanges()
-augroup end 
+let s:bufferList = []
 
 function! FoldJump()
     let l:result = 'j'
@@ -66,9 +64,17 @@ function! FoldJump()
                 let l:upCount = l:upCount + &scroll/2
             endif
             exec "normal! z."
+            let l:bufferNumber = bufnr("%")
+            add(s:bufferList, l:bufferNumber)
             redraw
         endif
     endwhile
+    if exists("#moveLessListenIfJumpsEnded#CursorHold#<buffer>")
+        autocmd! moveLessListenIfJumpsEnded CursorMoved <buffer>
+        autocmd moveLessListenIfJumpsEnded CursorMoved <buffer> call CheckAfterCursorChanges()
+    else
+        autocmd moveLessListenIfJumpsEnded CursorMoved <buffer> call CheckAfterCursorChanges()
+    endif
 endfunction
 
 "autocmd CursorMoved * exec "normal! zE"
