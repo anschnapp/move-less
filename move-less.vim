@@ -34,38 +34,24 @@ function! FoldJump()
         
         if l:result ==# 'j'
             if l:endLine - b:line - l:downCount > &scroll  
-                let l:lowerRange = l:downCount + 1
-                let l:upperRange = l:downCount + 1 + &scroll
+                let l:downCount = FoldAndAdjustCount(l:downCount, &scroll, 0)
                 exec "normal! zt"
-                exec ".+" . l:lowerRange . ",.+" . l:upperRange . "fold"
-                let l:downCount = l:downCount + &scroll
                 redraw
             endif
         elseif l:result ==# 'k'
             if b:line - l:firstLine - l:upCount > &scroll  
-                let l:lowerRange = l:upCount + 1
-                let l:upperRange = l:upCount + 1 + &scroll
-                exec ".-" . l:upperRange. ",.-" . l:lowerRange . "fold"
+                let l:upCount = FoldAndAdjustCount(l:upCount, &scroll, 1)
                 exec "normal! z-"
-                let l:upCount = l:upCount + &scroll
                 redraw
             endif
         elseif l:result ==# 'l'
             if l:endLine - b:line - l:downCount > &scroll/2  
-                let l:lowerRange = l:downCount + 1
-                let l:upperRange = l:downCount + 1 + &scroll/2
-                exec ".+" . l:lowerRange . ",.+" . l:upperRange . "fold"
-                let l:downCount = l:downCount + &scroll/2
+                let l:downCount = FoldAndAdjustCount(l:downCount, &scroll/2, 0)
             endif
             if b:line - l:firstLine - l:upCount > &scroll/2  
-                let l:lowerRange = l:upCount + 1
-                let l:upperRange = l:upCount + 1 + &scroll/2
-                exec ".-" . l:upperRange .  ",.-" . l:lowerRange . "fold"
-                let l:upCount = l:upCount + &scroll/2
+                let l:upCount = FoldAndAdjustCount(l:upCount, &scroll/2, 1)
             endif
             exec "normal! z."
-            let l:bufferNumber = bufnr("%")
-            add(s:bufferList, l:bufferNumber)
             redraw
         endif
     endwhile
@@ -74,6 +60,24 @@ function! FoldJump()
         autocmd CursorMoved <buffer> call CheckAfterCursorChanges()
     augroup end
 endfunction
+
+function! FoldAndAdjustCount(count, step, up) 
+    let l:result = a:count 
+    if a:up
+        let l:lowerRange = a:count + 1
+        let l:upperRange = a:count + 1 + a:step
+        exec ".-" . l:upperRange. ",.-" . l:lowerRange . "fold"
+        let l:result = a:count + a:step
+    else
+        let l:lowerRange = a:count + 1
+        let l:upperRange = a:count + 1 + a:step
+        exec ".+" . l:lowerRange . ",.+" . l:upperRange . "fold"
+        let l:result = a:count + a:step
+    endif
+    return l:result
+endfunction
+
+
 
 "autocmd CursorMoved * exec "normal! zE"
 noremap <leader>f :call FoldJump()<cr>
