@@ -39,7 +39,7 @@ function! FoldJump()
                 redraw
             endif
         elseif l:result ==# 'k'
-            if b:line - l:firstLine - l:upCount > &scroll  
+            if  b:line - l:firstLine - l:upCount > &scroll  
                 let l:upCount = FoldAndAdjustCount(l:upCount, &scroll, 1)
                 exec "normal! z-"
                 redraw
@@ -64,16 +64,23 @@ endfunction
 function! FoldAndAdjustCount(count, step, up) 
     let l:result = a:count 
     if a:up
-        let l:lowerRange = a:count + 1
+        let l:lowerRange = 1
         let l:upperRange = a:count + 1 + a:step
+        if a:count > 1
+            exec "normal! mzkzdj`z"
+        endif
         exec ".-" . l:upperRange. ",.-" . l:lowerRange . "fold"
         let l:result = a:count + a:step
     else
-        let l:lowerRange = a:count + 1
+        let l:lowerRange = 1
         let l:upperRange = a:count + 1 + a:step
+        if a:count > 1
+            exec "normal! mzjzdk`z"
+        endif
         exec ".+" . l:lowerRange . ",.+" . l:upperRange . "fold"
         let l:result = a:count + a:step
     endif
+    echom 'countresult =' . l:result
     return l:result
 endfunction
 
