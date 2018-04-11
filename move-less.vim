@@ -69,12 +69,10 @@ function! FoldJump()
             redraw
         endif
     endwhile
-    if exists("#moveLessListenIfJumpsEnded#CursorHold#<buffer>")
-        autocmd! moveLessListenIfJumpsEnded CursorMoved <buffer>
-        autocmd moveLessListenIfJumpsEnded CursorMoved <buffer> call CheckAfterCursorChanges()
-    else
-        autocmd moveLessListenIfJumpsEnded CursorMoved <buffer> call CheckAfterCursorChanges()
-    endif
+    augroup moveLessListenIfJumpsEnded
+        autocmd! CursorMoved <buffer>
+        autocmd CursorMoved <buffer> call CheckAfterCursorChanges()
+    augroup end
 endfunction
 
 "autocmd CursorMoved * exec "normal! zE"
