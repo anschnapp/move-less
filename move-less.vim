@@ -13,8 +13,8 @@ let s:bufferList = []
 function! FoldJump()
     let l:result = 'j'
     let b:line = line(".")
-    let l:upCount = 0
-    let l:downCount = 0
+    let b:upCount = 0
+    let b:downCount = 0
     let l:mode = 'initial'
     while l:result ==? 'j' || l:result ==? 'k' || l:result ==# 'l' || l:result ==# 'h'
         let l:result = ''
@@ -33,8 +33,8 @@ function! FoldJump()
         
         if l:result ==# 'j'
             if l:mode ==# 'down'
-                if l:endLine - b:line - l:downCount > &scroll  
-                    let l:downCount = FoldAndAdjustCount(l:downCount, &scroll, 0)
+                if l:endLine - b:line - b:downCount > &scroll  
+                    let b:downCount = FoldAndAdjustCount(b:downCount, &scroll, 0)
                 endif
             else
                 echom 'change to fold down mode'
@@ -44,13 +44,13 @@ function! FoldJump()
             redraw
         elseif l:result ==# 'J'
             if l:mode ==# 'down'
-                if l:downCount > 0
-                    if l:downCount > &scroll
+                if b:downCount > 0
+                    if b:downCount > &scroll
                         let l:step = &scroll * -1
                     else
-                        let l:step = l:downCount * -1
+                        let l:step = b:downCount * -1
                     endif
-                    let l:downCount = FoldAndAdjustCount(l:downCount, l:step, 0)
+                    let b:downCount = FoldAndAdjustCount(b:downCount, l:step, 0)
                 endif
             else
                 echom 'change to fold down mode'
@@ -60,8 +60,8 @@ function! FoldJump()
             redraw
         elseif l:result ==# 'k'
             if l:mode ==# 'up'
-                if  b:line - l:firstLine - l:upCount > &scroll  
-                    let l:upCount = FoldAndAdjustCount(l:upCount, &scroll, 1)
+                if  b:line - l:firstLine - b:upCount > &scroll  
+                    let b:upCount = FoldAndAdjustCount(b:upCount, &scroll, 1)
                 endif
             else
                 echom 'change to fold up mode'
@@ -71,13 +71,13 @@ function! FoldJump()
             redraw
         elseif l:result ==# 'K'
             if l:mode ==# 'up'
-                if l:upCount > 0
-                    if l:upCount > &scroll
+                if b:upCount > 0
+                    if b:upCount > &scroll
                         let l:step = &scroll * -1
                     else
-                        let l:step = l:upCount * -1
+                        let l:step = b:upCount * -1
                     endif
-                    let l:upCount = FoldAndAdjustCount(l:upCount, l:step, 1)
+                    let b:upCount = FoldAndAdjustCount(b:upCount, l:step, 1)
                 endif
             else
                 echom 'change to fold up mode'
@@ -87,11 +87,11 @@ function! FoldJump()
             redraw
         elseif l:result ==# 'l'
             if l:mode ==# 'both'
-                if l:endLine - b:line - l:downCount > &scroll/2  
-                    let l:downCount = FoldAndAdjustCount(l:downCount, &scroll/2, 0)
+                if l:endLine - b:line - b:downCount > &scroll/2  
+                    let b:downCount = FoldAndAdjustCount(b:downCount, &scroll/2, 0)
                 endif
-                if b:line - l:firstLine - l:upCount > &scroll/2  
-                    let l:upCount = FoldAndAdjustCount(l:upCount, &scroll/2, 1)
+                if b:line - l:firstLine - b:upCount > &scroll/2  
+                    let b:upCount = FoldAndAdjustCount(b:upCount, &scroll/2, 1)
                 endif
             else
                 echom 'change to fold both mode'
@@ -101,28 +101,26 @@ function! FoldJump()
             redraw
         elseif l:result ==# 'h'
             if l:mode ==# 'both'
-                if l:downCount > 0
-                    if l:downCount > &scroll/2
+                if b:downCount > 0
+                    if b:downCount > &scroll/2
                         let l:step = &scroll/2 * -1
                     else
-                        let l:step = l:downCount * -1
+                        let l:step = b:downCount * -1
                     endif
-                    let l:downCount = FoldAndAdjustCount(l:downCount, l:step, 0)
+                    let b:downCount = FoldAndAdjustCount(b:downCount, l:step, 0)
                 endif
-                if l:upCount > 0
-                    if l:upCount > &scroll/2
+                if b:upCount > 0
+                    if b:upCount > &scroll/2
                         let l:step = &scroll/2 * -1
                     else
-                        let l:step = l:upCount * -1
+                        let l:step = b:upCount * -1
                     endif
-                    let l:upCount = FoldAndAdjustCount(l:upCount, step, 1)
+                    let b:upCount = FoldAndAdjustCount(b:upCount, step, 1)
                 endif
             else
                 echom 'change to fold both mode'
                 let l:mode = 'both'
             endif
-            exec "normal! z."
-            redraw
         endif
     endwhile
     augroup moveLessListenIfJumpsEnded
@@ -137,7 +135,11 @@ function! FoldAndAdjustCount(count, step, up)
         let l:lowerRange = 1
         let l:upperRange = a:count + 1 + a:step
         if a:count > 1
-            exec "normal! mzkzdj`z"
+            exec "normal! kzd"
+            let l:currentLine = line(".")
+            let l:diffToDownLine = b:line - l:currentLine
+            echom 'diff to down:' . l:diffToDownLine
+            exec "normal! " . l:diffToDownLine . "j"
         endif
         exec ".-" . l:upperRange. ",.-" . l:lowerRange . "fold"
         let l:result = a:count + a:step
@@ -145,7 +147,10 @@ function! FoldAndAdjustCount(count, step, up)
         let l:lowerRange = 1
         let l:upperRange = a:count + 1 + a:step
         if a:count > 1
-            exec "normal! mzjzdk`z"
+            exec "normal! jzd"
+            let l:currentLine = line(".")
+            let l:diffToUpLine = l:currentLine - b:line
+            exec "normal! " . l:diffToUpLine . "k"
         endif
         exec ".+" . l:lowerRange . ",.+" . l:upperRange . "fold"
         let l:result = a:count + a:step
