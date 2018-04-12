@@ -16,14 +16,14 @@ function! FoldJump()
     let l:upCount = 0
     let l:downCount = 0
     let l:mode = 'initial'
-    while l:result ==# 'j' || l:result ==# 'k' || l:result ==# 'l' || l:result ==# 'h'
+    while l:result ==? 'j' || l:result ==? 'k' || l:result ==# 'l' || l:result ==# 'h'
         let l:result = ''
         while l:result == ''
             let l:result = nr2char(getchar(1))
             sleep 20m
         endwhile
         
-        if l:result ==# 'j' || l:result ==# 'k' || l:result ==# 'l' || l:result ==# 'h'
+        if l:result ==? 'j' || l:result ==? 'k' || l:result ==# 'l' || l:result ==# 'h'
             let l:result = nr2char(getchar())
         endif
 
@@ -42,10 +42,42 @@ function! FoldJump()
             endif
             exec "normal! zt"
             redraw
+        elseif l:result ==# 'J'
+            if l:mode ==# 'down'
+                if l:downCount > 0
+                    if l:downCount > &scroll
+                        let l:step = &scroll * -1
+                    else
+                        let l:step = l:downCount * -1
+                    endif
+                    let l:downCount = FoldAndAdjustCount(l:downCount, l:step, 0)
+                endif
+            else
+                echom 'change to fold down mode'
+                let l:mode = 'down'
+            endif
+            exec "normal! zt"
+            redraw
         elseif l:result ==# 'k'
             if l:mode ==# 'up'
                 if  b:line - l:firstLine - l:upCount > &scroll  
                     let l:upCount = FoldAndAdjustCount(l:upCount, &scroll, 1)
+                endif
+            else
+                echom 'change to fold up mode'
+                let l:mode = 'up'
+            endif
+            exec "normal! z-"
+            redraw
+        elseif l:result ==# 'K'
+            if l:mode ==# 'up'
+                if l:upCount > 0
+                    if l:upCount > &scroll
+                        let l:step = &scroll * -1
+                    else
+                        let l:step = l:upCount * -1
+                    endif
+                    let l:upCount = FoldAndAdjustCount(l:upCount, l:step, 1)
                 endif
             else
                 echom 'change to fold up mode'
