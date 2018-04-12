@@ -22,6 +22,7 @@ function! FoldJump()
         let l:result = ''
         while l:result == ''
             let l:result = nr2char(getchar(1))
+            sleep 20m
         endwhile
         
         if l:result ==# 'j' || l:result ==# 'k' || l:result ==# 'l'
