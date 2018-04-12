@@ -1,10 +1,7 @@
 function! CheckAfterCursorChanges() 
-    echom 'ping'
     if exists("b:line") && b:line
         let l:currentLine = line(".")
         if b:line != l:currentLine
-            echom 'b:line=' . b:line
-            echom 'l:currentLine=' . l:currentLine
             let b:line = 0
             exec "normal zE"
             autocmd! moveLessListenIfJumpsEnded CursorMoved <buffer>
@@ -18,6 +15,7 @@ function! FoldJump()
     let b:line = line(".")
     let l:upCount = 0
     let l:downCount = 0
+    let l:mode = 'initial'
     while l:result ==# 'j' || l:result ==# 'k' || l:result ==# 'l'
         let l:result = ''
         while l:result == ''
@@ -34,23 +32,38 @@ function! FoldJump()
 
         
         if l:result ==# 'j'
-            if l:endLine - b:line - l:downCount > &scroll  
-                let l:downCount = FoldAndAdjustCount(l:downCount, &scroll, 0)
-                exec "normal! zt"
-                redraw
+            if l:mode ==# 'down'
+                if l:endLine - b:line - l:downCount > &scroll  
+                    let l:downCount = FoldAndAdjustCount(l:downCount, &scroll, 0)
+                endif
+            else
+                echom 'change to fold down mode'
+                let l:mode = 'down'
             endif
+            exec "normal! zt"
+            redraw
         elseif l:result ==# 'k'
-            if  b:line - l:firstLine - l:upCount > &scroll  
-                let l:upCount = FoldAndAdjustCount(l:upCount, &scroll, 1)
-                exec "normal! z-"
-                redraw
+            if l:mode ==# 'up'
+                if  b:line - l:firstLine - l:upCount > &scroll  
+                    let l:upCount = FoldAndAdjustCount(l:upCount, &scroll, 1)
+                endif
+            else
+                echom 'change to fold up mode'
+                let l:mode = 'up'
             endif
+            exec "normal! z-"
+            redraw
         elseif l:result ==# 'l'
-            if l:endLine - b:line - l:downCount > &scroll/2  
-                let l:downCount = FoldAndAdjustCount(l:downCount, &scroll/2, 0)
-            endif
-            if b:line - l:firstLine - l:upCount > &scroll/2  
-                let l:upCount = FoldAndAdjustCount(l:upCount, &scroll/2, 1)
+            if l:mode ==# 'both'
+                if l:endLine - b:line - l:downCount > &scroll/2  
+                    let l:downCount = FoldAndAdjustCount(l:downCount, &scroll/2, 0)
+                endif
+                if b:line - l:firstLine - l:upCount > &scroll/2  
+                    let l:upCount = FoldAndAdjustCount(l:upCount, &scroll/2, 1)
+                endif
+            else
+                echom 'change to fold both mode'
+                let l:mode = 'both'
             endif
             exec "normal! z."
             redraw
@@ -81,7 +94,6 @@ function! FoldAndAdjustCount(count, step, up)
         exec ".+" . l:lowerRange . ",.+" . l:upperRange . "fold"
         let l:result = a:count + a:step
     endif
-    echom 'countresult =' . l:result
     return l:result
 endfunction
 
