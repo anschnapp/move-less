@@ -2,8 +2,14 @@ function! CheckAfterCursorChanges()
     if exists("b:line") && b:line
         let l:currentLine = line(".")
         if b:line != l:currentLine
+
+            if b:upCount > 1
+                exec b:line + 1 . 'global/\v./normal! zd'
+            endif
+            if b:downCount > 1
+                exec b:line - 1 . 'global/\v./normal! zd'
+            endif
             let b:line = 0
-            exec "normal zE"
             autocmd! moveLessListenIfJumpsEnded CursorMoved <buffer>
         endif
     endif
@@ -121,6 +127,8 @@ function! FoldJump()
                 echom 'change to fold both mode'
                 let l:mode = 'both'
             endif
+            exec "normal! z."
+            redraw
         endif
     endwhile
     augroup moveLessListenIfJumpsEnded
@@ -135,22 +143,17 @@ function! FoldAndAdjustCount(count, step, up)
         let l:lowerRange = 1
         let l:upperRange = a:count + 1 + a:step
         if a:count > 1
-            exec "normal! kzd"
-            let l:currentLine = line(".")
-            let l:diffToDownLine = b:line - l:currentLine
-            echom 'diff to down:' . l:diffToDownLine
-            exec "normal! " . l:diffToDownLine . "j"
+            exec b:line - 1 . 'global/\v./normal! zd``'
         endif
         exec ".-" . l:upperRange. ",.-" . l:lowerRange . "fold"
         let l:result = a:count + a:step
     else
+        echo 'down'
         let l:lowerRange = 1
         let l:upperRange = a:count + 1 + a:step
         if a:count > 1
-            exec "normal! jzd"
-            let l:currentLine = line(".")
-            let l:diffToUpLine = l:currentLine - b:line
-            exec "normal! " . l:diffToUpLine . "k"
+            echom 'globalline=' . b:line + 1
+            exec b:line + 1 . 'global/\v./normal! zd``'
         endif
         exec ".+" . l:lowerRange . ",.+" . l:upperRange . "fold"
         let l:result = a:count + a:step
