@@ -1,13 +1,13 @@
-function! CheckAfterCursorChanges() 
+function! s:CheckAfterCursorChanges() 
     if exists("b:line") && b:line
         let l:currentLine = line(".")
         if b:line != l:currentLine
 
             if b:upCount > 1
-                exec b:line + 1 . 'global/\v./normal! zd'
+                call Unfold(1)
             endif
             if b:downCount > 1
-                exec b:line - 1 . 'global/\v./normal! zd'
+                call Unfold(0)
             endif
             let b:line = 0
             autocmd! moveLessListenIfJumpsEnded CursorMoved <buffer>
@@ -16,7 +16,7 @@ function! CheckAfterCursorChanges()
 endfunction
 let s:bufferList = []
 
-function! FoldJump()
+function! MoveLessMode()
     let l:result = 'j'
     let b:line = line(".")
     let b:upCount = 0
@@ -137,13 +137,13 @@ function! FoldJump()
     augroup end
 endfunction
 
-function! FoldAndAdjustCount(count, step, up) 
+function! s:FoldAndAdjustCount(count, step, up) 
     let l:result = a:count 
     if a:up
         let l:lowerRange = 1
         let l:upperRange = a:count + 1 + a:step
         if a:count > 1
-            exec b:line - 1 . 'global/\v./normal! zd``'
+            call Unfold(a:up)
         endif
         exec ".-" . l:upperRange. ",.-" . l:lowerRange . "fold"
         let l:result = a:count + a:step
@@ -152,8 +152,7 @@ function! FoldAndAdjustCount(count, step, up)
         let l:lowerRange = 1
         let l:upperRange = a:count + 1 + a:step
         if a:count > 1
-            echom 'globalline=' . b:line + 1
-            exec b:line + 1 . 'global/\v./normal! zd``'
+            call Unfold(a:up)
         endif
         exec ".+" . l:lowerRange . ",.+" . l:upperRange . "fold"
         let l:result = a:count + a:step
@@ -161,7 +160,14 @@ function! FoldAndAdjustCount(count, step, up)
     return l:result
 endfunction
 
+function! s:Unfold(up)
+    if a:up
+        let l:unfoldLine = b:line - 1
+    else
+        let l:unfoldLine = b:line + 1
+    endif
+    exec 'normal! ' . l:unfoldLine . 'ggzd``'
+endfunction
 
 
-"autocmd CursorMoved * exec "normal! zE"
-noremap <leader>f :call FoldJump()<cr>
+noremap <leader>m :call MoveLessMode()<cr>
