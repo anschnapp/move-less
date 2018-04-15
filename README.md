@@ -6,7 +6,7 @@ move-less is all about faster navigation by moving less around.
 The idea is that you fold the space between your line and the target destination and then jump to the target position. 
 
 
-To archive this there is a so called move-less-mode which you can enter by typing <leader>m.
+To archive this there is a so called move-less-mode which you can enter by typing LEADER+m.
 If you want to remap the setting you can just create a mapping which calls the function MoveLessMode.
 
 If you are in the move-less mode you can navigate like the following:
