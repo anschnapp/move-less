@@ -43,7 +43,6 @@ function! MoveLessMode()
                     let b:downCount = s:FoldAndAdjustCount(b:downCount, &scroll, 0)
                 endif
             else
-                echom 'change to fold down mode'
                 let l:mode = 'down'
             endif
             exec "normal! zt"
@@ -59,7 +58,6 @@ function! MoveLessMode()
                     let b:downCount = s:FoldAndAdjustCount(b:downCount, l:step, 0)
                 endif
             else
-                echom 'change to fold down mode'
                 let l:mode = 'down'
             endif
             exec "normal! zt"
@@ -70,7 +68,6 @@ function! MoveLessMode()
                     let b:upCount = s:FoldAndAdjustCount(b:upCount, &scroll, 1)
                 endif
             else
-                echom 'change to fold up mode'
                 let l:mode = 'up'
             endif
             exec "normal! z-"
@@ -86,7 +83,6 @@ function! MoveLessMode()
                     let b:upCount = s:FoldAndAdjustCount(b:upCount, l:step, 1)
                 endif
             else
-                echom 'change to fold up mode'
                 let l:mode = 'up'
             endif
             exec "normal! z-"
@@ -100,7 +96,6 @@ function! MoveLessMode()
                     let b:upCount = s:FoldAndAdjustCount(b:upCount, &scroll/2, 1)
                 endif
             else
-                echom 'change to fold both mode'
                 let l:mode = 'both'
             endif
             exec "normal! z."
@@ -124,7 +119,6 @@ function! MoveLessMode()
                     let b:upCount = s:FoldAndAdjustCount(b:upCount, step, 1)
                 endif
             else
-                echom 'change to fold both mode'
                 let l:mode = 'both'
             endif
             exec "normal! z."
@@ -157,7 +151,6 @@ function! s:FoldAndAdjustCount(count, step, up)
         exec ".-" . l:upperRange. ",.-" . l:lowerRange . "fold"
         let l:result = a:count + a:step
     else
-        echo 'down'
         let l:lowerRange = 1
         let l:upperRange = a:count + 1 + a:step
         if a:count > 1
