@@ -4,10 +4,10 @@ function! s:CheckAfterCursorChanges()
         if b:line != l:currentLine
 
             if b:upCount > 1
-                call Unfold(1)
+                call s:Unfold(1)
             endif
             if b:downCount > 1
-                call Unfold(0)
+                call s:Unfold(0)
             endif
             let b:line = 0
             autocmd! moveLessListenIfJumpsEnded CursorMoved <buffer>
@@ -40,7 +40,7 @@ function! MoveLessMode()
         if l:result ==# 'j'
             if l:mode ==# 'down'
                 if l:endLine - b:line - b:downCount > &scroll  
-                    let b:downCount = FoldAndAdjustCount(b:downCount, &scroll, 0)
+                    let b:downCount = s:FoldAndAdjustCount(b:downCount, &scroll, 0)
                 endif
             else
                 echom 'change to fold down mode'
@@ -56,7 +56,7 @@ function! MoveLessMode()
                     else
                         let l:step = b:downCount * -1
                     endif
-                    let b:downCount = FoldAndAdjustCount(b:downCount, l:step, 0)
+                    let b:downCount = s:FoldAndAdjustCount(b:downCount, l:step, 0)
                 endif
             else
                 echom 'change to fold down mode'
@@ -67,7 +67,7 @@ function! MoveLessMode()
         elseif l:result ==# 'k'
             if l:mode ==# 'up'
                 if  b:line - l:firstLine - b:upCount > &scroll  
-                    let b:upCount = FoldAndAdjustCount(b:upCount, &scroll, 1)
+                    let b:upCount = s:FoldAndAdjustCount(b:upCount, &scroll, 1)
                 endif
             else
                 echom 'change to fold up mode'
@@ -83,7 +83,7 @@ function! MoveLessMode()
                     else
                         let l:step = b:upCount * -1
                     endif
-                    let b:upCount = FoldAndAdjustCount(b:upCount, l:step, 1)
+                    let b:upCount = s:FoldAndAdjustCount(b:upCount, l:step, 1)
                 endif
             else
                 echom 'change to fold up mode'
@@ -94,10 +94,10 @@ function! MoveLessMode()
         elseif l:result ==# 'l'
             if l:mode ==# 'both'
                 if l:endLine - b:line - b:downCount > &scroll/2  
-                    let b:downCount = FoldAndAdjustCount(b:downCount, &scroll/2, 0)
+                    let b:downCount = s:FoldAndAdjustCount(b:downCount, &scroll/2, 0)
                 endif
                 if b:line - l:firstLine - b:upCount > &scroll/2  
-                    let b:upCount = FoldAndAdjustCount(b:upCount, &scroll/2, 1)
+                    let b:upCount = s:FoldAndAdjustCount(b:upCount, &scroll/2, 1)
                 endif
             else
                 echom 'change to fold both mode'
@@ -113,7 +113,7 @@ function! MoveLessMode()
                     else
                         let l:step = b:downCount * -1
                     endif
-                    let b:downCount = FoldAndAdjustCount(b:downCount, l:step, 0)
+                    let b:downCount = s:FoldAndAdjustCount(b:downCount, l:step, 0)
                 endif
                 if b:upCount > 0
                     if b:upCount > &scroll/2
@@ -121,7 +121,7 @@ function! MoveLessMode()
                     else
                         let l:step = b:upCount * -1
                     endif
-                    let b:upCount = FoldAndAdjustCount(b:upCount, step, 1)
+                    let b:upCount = s:FoldAndAdjustCount(b:upCount, step, 1)
                 endif
             else
                 echom 'change to fold both mode'
@@ -131,10 +131,19 @@ function! MoveLessMode()
             redraw
         endif
     endwhile
-    augroup moveLessListenIfJumpsEnded
-        autocmd! CursorMoved <buffer>
-        autocmd CursorMoved <buffer> call CheckAfterCursorChanges()
-    augroup end
+    if l:result ==# "\<esc>"
+        if b:upCount > 1
+            call s:Unfold(1)
+        endif
+        if b:downCount > 1
+            call s:Unfold(0)
+        endif
+    else
+        augroup moveLessListenIfJumpsEnded
+            autocmd! CursorMoved <buffer>
+            autocmd CursorMoved <buffer> call s:CheckAfterCursorChanges()
+        augroup end
+    endif
 endfunction
 
 function! s:FoldAndAdjustCount(count, step, up) 
@@ -143,7 +152,7 @@ function! s:FoldAndAdjustCount(count, step, up)
         let l:lowerRange = 1
         let l:upperRange = a:count + 1 + a:step
         if a:count > 1
-            call Unfold(a:up)
+            call s:Unfold(a:up)
         endif
         exec ".-" . l:upperRange. ",.-" . l:lowerRange . "fold"
         let l:result = a:count + a:step
@@ -152,7 +161,7 @@ function! s:FoldAndAdjustCount(count, step, up)
         let l:lowerRange = 1
         let l:upperRange = a:count + 1 + a:step
         if a:count > 1
-            call Unfold(a:up)
+            call s:Unfold(a:up)
         endif
         exec ".+" . l:lowerRange . ",.+" . l:upperRange . "fold"
         let l:result = a:count + a:step
