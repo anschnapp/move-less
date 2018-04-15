@@ -23,7 +23,7 @@ k: Type once and your line will be displayed at the middle. Any further click wi
 
 h: Type once and your line will be displayed at the middle. Any further click will reduce the fold above and below your cursor position. So, you can see the text again which you already fold. It's kind of an undo for k.
 
-<esc>: Abort move less mode and delete all foldings, you are not able to jump to Any distance place now.
+ESC: Abort move less mode and delete all foldings, you are not able to jump to Any distance place now.
 
 Any other key: Move less mode will directly be ended, but folding will be temporary remain. From now on, you can jump over the folding to get to your target position. You can use Any vim method you like for this action. For example move-less is intended to work pretty well with easymotion.
 After such an action the folding will be immediately removed. It is only intended to be used for navigation without moving.
