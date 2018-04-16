@@ -5,15 +5,16 @@ move-less is all about faster navigation by moving less around.
 
 The idea is that you fold the space between your line and the target destination and then jump to the target position. 
 
-
 To archive this there is a so called move-less-mode which you can enter by typing `<LEADER>m`.
-If you want to remap the setting you can just create a mapping which calls the function MoveLessMode.
 
-Here you can see a little demo.
+Here you can see a little demo:
+![move-less demonstration](https://raw.githubusercontent.com/anschnapp/hostGifsForReadmeOtherProjects/master/move-less-demo.gif)
 First the user look up, then below and finally in both directions.
 At the end he jumps to the target position by using plain `<number>k`
-![move-less demonstration](https://raw.githubusercontent.com/anschnapp/hostGifsForReadmeOtherProjects/4eb077b890a351c274abf69f74a40c8950f337ae/move-less-demo.gif)
 
+If you want to remap the setting you can just create a mapping which calls the function MoveLessMode.
+For instance if you want to map it to `'`
+`noremap ' :call MoveLessMode()<cr>`
 
 If you are in the move-less mode you can navigate like the following:
 
