@@ -6,8 +6,14 @@ move-less is all about faster navigation by moving less around.
 The idea is that you fold the space between your line and the target destination and then jump to the target position. 
 
 
-To archive this there is a so called move-less-mode which you can enter by typing LEADER+m.
+To archive this there is a so called move-less-mode which you can enter by typing `<LEADER>m`.
 If you want to remap the setting you can just create a mapping which calls the function MoveLessMode.
+
+Here you can see a little demo.
+First the user look up, then below and finally in both directions.
+At the end he jumps to the target position by using plain `<number>k`
+![move-less demonstration](https://raw.githubusercontent.com/anschnapp/hostGifsForReadmeOtherProjects/4eb077b890a351c274abf69f74a40c8950f337ae/move-less-demo.gif)
+
 
 If you are in the move-less mode you can navigate like the following:
 
@@ -23,9 +29,9 @@ k: Type once and your line will be displayed at the middle. Any further click wi
 
 h: Type once and your line will be displayed at the middle. Any further click will reduce the fold above and below your cursor position. So, you can see the text again which you already fold. It's kind of an undo for k.
 
-ESC: Abort move less mode and delete all foldings, you are not able to jump to Any distance place now.
+`<ESC>`: Abort move less mode and delete all foldings, you are not able to jump to Any distance place now.
 
-Any other key: Move less mode will directly be ended, but folding will be temporary remain. From now on, you can jump over the folding to get to your target position. You can use Any vim method you like for this action. For example move-less is intended to work pretty well with easymotion.
+Any other key: Move less mode will directly be ended, but folding will be temporary remain. From now on, you can jump over the folding to get to your target position. You can use any vim method you like for this action. For example move-less is intended to work pretty well with easymotion.
 After such an action the folding will be immediately removed. It is only intended to be used for navigation without moving.
 
 License
