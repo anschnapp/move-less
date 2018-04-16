@@ -14,7 +14,8 @@ First the user look up, then below and finally in both directions.
 At the end he jumps to the target position by using plain `<number>k`
 
 If you want to remap the setting you can just create a mapping which calls the function MoveLessMode.
-For instance if you want to map it to `'`
+For instance if you want to map it to `'` then you can just add the following mapping to your vimrc:
+
 `noremap ' :call MoveLessMode()<cr>`
 
 If you are in the move-less mode you can navigate like the following:
