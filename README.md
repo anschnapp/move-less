@@ -9,6 +9,7 @@ To archive this there is a so called move-less-mode which you can enter by typin
 
 Here you can see a little demo:
 ![move-less demonstration](https://raw.githubusercontent.com/anschnapp/hostGifsForReadmeOtherProjects/master/move-less-demo.gif)
+
 First the user look up, then below and finally in both directions.
 At the end he jumps to the target position by using plain `<number>k`
 
