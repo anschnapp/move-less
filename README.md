@@ -1,6 +1,6 @@
-move-less.vim
-============
+# move-less.vim
 
+## Description
 move-less is all about faster navigation by moving less around.
 
 The idea is that you fold the space between your line and the target destination and then jump to the target position. 
@@ -34,8 +34,20 @@ If you are in the move-less mode you can navigate like the following:
 
 `<ESC>`: Abort move less mode and delete all foldings, you are not able to jump to Any distance place now.
 
-`<Any other key>`: Move less mode will directly be ended, but folding will be temporary remain. From now on, you can jump over the folding to get to your target position. You can use any vim method you like for this action. For example move-less is intended to work pretty well with easymotion.
+`<Any other key>`: Move less mode will directly be ended, but folding will be temporary remain. From now on, you can jump over the folding to get to your target position. You can use any vim method you like for this action. For example move-less is intended to work pretty well with easymotion for archiving super fast navigation.
+
 After such an action the folding will be immediately removed. It is only intended to be used for navigation without moving.
+
+## Installation
+
+### Use [Vundle](https://github.com/gmarik/Vundle.vim)
+
+Add `Plugin 'anschnapp/move-less'` to your `~/.vimrc` and run `PluginInstall`.
+
+### Use [Pathogen](https://github.com/tpope/vim-pathogen)
+```
+git clone https://github.com/anschnapp/move-less ~/.vim/bundle/move-less
+```
 
 License
 -------
