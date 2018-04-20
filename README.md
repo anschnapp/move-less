@@ -1,6 +1,5 @@
 # move-less.vim
 
-## Description
 move-less is all about faster navigation by moving less around.
 
 The idea is that you fold the space between your line and the target destination and then jump to the target position. 
