@@ -3,7 +3,7 @@
 Author:  Andreas Schnapp <a.snap@t-online.de>
 License: Same terms as Vim itself (see |license|)
 
-INTRODUCTION                                    *move-less*
+INTRODUCTION
 
 This plugin is a tool for navigating inside of a file without moving the cursor to another line.
 The idea is that you fold the space between your line and the target destination and then jump to the target position. 
