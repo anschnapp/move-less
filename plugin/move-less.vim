@@ -1,7 +1,7 @@
 function! s:CheckAfterCursorChanges() 
     if exists("b:line") && b:line
         let l:currentLine = line(".")
-        if b:line != l:currentLine
+        if (l:currentLine < b:line - b:upCount - 1) || (l:currentLine > b:line + b:downCount)
 
             if b:upCount > 1
                 call s:Unfold(1)
