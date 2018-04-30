@@ -33,7 +33,11 @@ If you are in the move-less mode you can navigate like the following:
 
 `<ESC>`: Abort move less mode and delete all foldings, you are not able to jump to Any distance place now.
 
-`<Any other key>`: Move less mode will directly be ended, but folding will be temporary remain. From now on, you can jump over the folding to get to your target position. You can use any vim method you like for this action. For example move-less is intended to work pretty well with easymotion for archiving super fast navigation.
+`<Any other key>`: Move less mode will directly be ended, but folding will be temporary remain. From now on, you can jump or walk over the folding to get to your target position. You can use any vim method you like for this action. For example move-less is intended to work pretty well with easymotion for archiving super fast navigation.
+
+As long as no jump or walk over the folding was taken the fold remains, if the move-less mode is activated again in such a situation it will just continue the last mode (by still using the actual folding). 
+This behavior could also be used for going into the move less mode again and make a clean abort of the mode by typing `<ESC>`.
+
 
 After such an action the folding will be immediately removed. It is only intended to be used for navigation without moving.
 
