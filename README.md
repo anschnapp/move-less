@@ -2,7 +2,7 @@
 
 move-less is all about faster navigation by moving less around.
 
-The idea is that you fold the space between your line and the target destination and then jump to the target position. 
+The idea is that you fold the space between your line and the target destination and then jump to the target position. Just like similar to some kind of a warp drive ;) 
 
 To archive this there is a so called move-less-mode which you can enter by typing `<LEADER>m`.
 
