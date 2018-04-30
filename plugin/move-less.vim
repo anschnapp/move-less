@@ -18,9 +18,17 @@ let s:bufferList = []
 
 function! MoveLessMode()
     let l:result = 'j'
-    let b:line = line(".")
-    let b:upCount = 0
-    let b:downCount = 0
+    " only initialize new state values if last move-less mode was succesfully
+    " ened, otherwise continue last mode
+    if !exists("b:line") || !b:line
+        let b:line = line(".")
+        let b:upCount = 0
+        let b:downCount = 0
+    else
+        " go to line where the actual move-less mode was original started
+        exec "normal! " . b:line . "gg"
+    endif
+
     let l:mode = 'initial'
     while l:result ==? 'j' || l:result ==? 'k' || l:result ==# 'l' || l:result ==# 'h'
         let l:result = ''
