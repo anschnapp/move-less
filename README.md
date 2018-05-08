@@ -52,8 +52,9 @@ Add `Plugin 'anschnapp/move-less'` to your `~/.vimrc` and run `PluginInstall`.
 git clone https://github.com/anschnapp/move-less ~/.vim/bundle/move-less
 ```
 
-License
--------
+## Contribution
+I welcome every kind of contribution like sending issue's, feature requests or pull requests.
 
+## License
 Copyright (c) Andreas Schnapp.  Distributed under the same terms as Vim itself.
 See `:help license`.
