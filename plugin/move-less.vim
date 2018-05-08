@@ -139,6 +139,7 @@ function! MoveLessMode()
         if b:moveLessDownCount > 1
             call s:Unfold(0)
         endif
+        unlet b:moveLessCursorPosition
     else
         augroup moveLessListenIfJumpsEnded
             autocmd! CursorMoved <buffer>
