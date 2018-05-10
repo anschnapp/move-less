@@ -29,14 +29,14 @@ function! MoveLessMode()
     endif
 
     let l:mode = 'initial'
-    while l:result ==? 'j' || l:result ==? 'k' || l:result ==# 'l' || l:result ==# 'h'
+    while l:result ==? 'j' || l:result ==? 'k' || l:result ==? 'l' || l:result ==? 'h'
         let l:result = ''
         while l:result == ''
             let l:result = nr2char(getchar(1))
             sleep 20m
         endwhile
         
-        if l:result ==? 'j' || l:result ==? 'k' || l:result ==# 'l' || l:result ==# 'h'
+        if l:result ==? 'j' || l:result ==? 'k' || l:result ==? 'l' || l:result ==? 'h'
             let l:result = nr2char(getchar())
         endif
 
@@ -94,7 +94,7 @@ function! MoveLessMode()
             endif
             exec "normal! z-"
             redraw
-        elseif l:result ==# 'l'
+        elseif l:result ==# 'l' || l:result ==# 'H'
             if l:mode ==# 'both'
                 if l:endLine - b:moveLessCursorPosition[1] - b:moveLessDownCount > &scroll/2  
                     let b:moveLessDownCount = s:FoldAndAdjustCount(b:moveLessDownCount, &scroll/2, 0)
@@ -107,7 +107,7 @@ function! MoveLessMode()
             endif
             exec "normal! z."
             redraw
-        elseif l:result ==# 'h'
+        elseif l:result ==# 'h' || l:result ==# 'L'
             if l:mode ==# 'both'
                 if b:moveLessDownCount > 0
                     if b:moveLessDownCount > &scroll/2

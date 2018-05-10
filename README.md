@@ -2,7 +2,7 @@
 
 move-less is all about faster navigation by moving less around.
 
-The idea is that you fold the space between your line and the target destination and then jump to the target position. Just like similar to some kind of a warp drive ;) 
+The idea is that you fold the space between your line and the target destination and then jump to the target position. Just similar to some kind of warp drive ;) 
 
 To archive this there is a so called move-less-mode which you can enter by typing `<LEADER>m`.
 
@@ -27,9 +27,9 @@ If you are in the move-less mode you can navigate like the following:
 
 `K`: Type once and your line will be displayed at the bottom. Any further click will reduce the fold above your cursor position. So, that you are able to see text again which you already have fold (kind of an undo of k)
 
-`k`: Type once and your line will be displayed at the middle. Any further click will fold the text above and below your cursor position. So, that you are able to search your target positon in both directions.
+`l`, or `H`: Type once and your line will be displayed at the middle. Any further click will fold the text above and below your cursor position. So, that you are able to search your target positon in both directions.
 
-`h`: Type once and your line will be displayed at the middle. Any further click will reduce the fold above and below your cursor position. So, you can see the text again which you already fold. It's kind of an undo for k.
+`h` or `L`: Type once and your line will be displayed at the middle. Any further click will reduce the fold above and below your cursor position. So, you can see the text again which you already fold. It's kind of an undo for `l`.
 
 `<ESC>`: Abort move less mode and delete all foldings, you are not able to jump to Any distance place now.
 

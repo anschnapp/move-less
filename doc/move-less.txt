@@ -21,9 +21,9 @@ J: Type once and your line will be displayed at the top (if possible). Any furth
 
 K: Type once and your line will be displayed at the bottom. Any further click will reduce the fold above your cursor position. So, that you are able to see text again which you already have fold (kind of an undo of k)
 
-k: Type once and your line will be displayed at the middle. Any further click will fold the text above and below your cursor position. So, that you are able to search your target positon in both directions.
+l or H: Type once and your line will be displayed at the middle. Any further click will fold the text above and below your cursor position. So, that you are able to search your target positon in both directions.
 
-h: Type once and your line will be displayed at the middle. Any further click will reduce the fold above and below your cursor position. So, you can see the text again which you already fold. It's kind of an undo for k.
+h or L: Type once and your line will be displayed at the middle. Any further click will reduce the fold above and below your cursor position. So, you can see the text again which you already fold. It's kind of an undo for l.
 
 <esc>: Abort move less mode and delete all foldings, you are not able to jump to Any distance place now.
 
