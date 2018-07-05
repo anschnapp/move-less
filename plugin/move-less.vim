@@ -16,7 +16,17 @@ function! s:CheckAfterCursorChanges()
 endfunction
 
 function! MoveLessMode()
-    let l:result = 'j'
+    let l:result = 'j' 
+    if exists("b:moveLessCursorPosition") && b:moveLessModePermanentEnded
+        if b:moveLessUpCount > 1
+            call s:Unfold(1)
+        endif
+        if b:moveLessDownCount > 1
+            call s:Unfold(0)
+        endif
+        unlet b:moveLessCursorPosition
+        unlet b:moveLessModePermanentEnded
+    endif
     " only initialize new state values if last move-less mode was succesfully
     " ened, otherwise continue last mode
     if !exists("b:moveLessCursorPosition") || !b:moveLessCursorPosition[1]
@@ -36,7 +46,7 @@ function! MoveLessMode()
             sleep 20m
         endwhile
         
-        if l:result ==? 'j' || l:result ==? 'k' || l:result ==? 'l' || l:result ==? 'h'
+        if l:result ==? 'j' || l:result ==? 'k' || l:result ==? 'l' || l:result ==? 'h' || l:result ==# 'p'
             let l:result = nr2char(getchar())
         endif
 
@@ -140,6 +150,9 @@ function! MoveLessMode()
             call s:Unfold(0)
         endif
         unlet b:moveLessCursorPosition
+    elseif l:result ==# "p"
+        let b:moveLessModePermanentEnded = 1
+        " if p is clicked the folding should be permaent until someone would clear it with move less mode <ESC> or make a new move less mode navigation
     else
         augroup moveLessListenIfJumpsEnded
             autocmd! CursorMoved <buffer>
