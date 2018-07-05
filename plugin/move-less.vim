@@ -17,7 +17,7 @@ endfunction
 
 function! MoveLessMode()
     let l:result = 'j' 
-    if exists("b:moveLessCursorPosition") && b:moveLessModePermanentEnded
+    if exists("b:moveLessModePermanentEnded") && b:moveLessModePermanentEnded
         if b:moveLessUpCount > 1
             call s:Unfold(1)
         endif
