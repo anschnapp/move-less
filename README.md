@@ -40,7 +40,7 @@ If you are in the move-less mode you can navigate like the following:
 
 `<ESC>`: Abort move less mode and delete all foldings, you are not able to jump to Any distance place now.
 
-`p`: Stop the move less mode but let the folding remain (p)ermanently. In fact it's just more permenant then the normal behaviour it's also temporary until you use the mode less mode next time.
+`p`: Stop the move less mode but let the folding remain (p)ermanently. In fact it's just more permanent then the normal behaviour it's also temporary until you use the mode less mode next time.
 If you just want to unfold later you can go to move less mode and end it directly with <ESC>. This new feature permanent feature should be handy if you want to edit two places in the file which has a big distance.
 
 `<Any other key>`: Move less mode will directly be ended, but folding will be temporary remain. From now on, you can jump or walk over the folding to get to your target position. You can use any vim method you like for this action. For example move-less is intended to work pretty well with easymotion for archiving super fast navigation.
