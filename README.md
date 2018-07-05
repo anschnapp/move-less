@@ -15,7 +15,7 @@ Here you can see a little demo:
 First the user look up, then below and finally in both directions.
 At the end he jumps to the target position by using plain `<number>k`
 
-ou can now also use it to generate a temporary upper and or bottom folding. So, you can place to distance section from the upper and the bottom together. (see meaning of 'p' while in move less mode)
+You can now also use it to generate a temporary upper and or bottom folding. So, you can place to distance section from the upper and the bottom together. (see meaning of 'p' while in move less mode)
 
 This can be very handy if you have to make multiple replacements or movings from two distance places. 
 
