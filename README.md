@@ -51,6 +51,35 @@ This behavior could also be used for going into the move less mode again and mak
 
 After such an action the folding will be immediately removed. It is only intended to be used for navigation without moving.
 
+## Scenarios, how this plugin might help you
+### Faster navigaton without move
+Let's pretend our cursor is in the middle of a huge file (300 lines) lets say line number 150. And then we are searching for a function. But we are not sure about the function name, we are not even sure if it's located inside the current file at all.
+
+Normally we would now navigate up the file. If we don't find something we have to navigate the file down.
+
+With the plugin you activate the so called move-less mode. Then you look up by first clicking of k. If you don't find the target position you would click k again and fold the lines above you (which you already have checked). If you click to fast k, and may miss something you could decrease the folding via K.
+
+In this way you could see "screen by screen (feels a little bit like less ;)) until you you see the top of the file.
+
+If you dont have found something you can do the same in the down direction (j/J).
+
+If you like you could search in both directions at the same time (l / h).
+
+If you found your function you could jump or walk to it by simple use your prefered way to do it. (i like easymotion a lot for this step but it's not necessary). If you use a action which writes to the jumplist you could easily switch between source and target positoon afterwards.
+
+If you have found nothing you can click ESC and you don't have even changed your positoon at all.
+
+So long talk short:
+
+* don't move cursor position just for searching the right line
+
+
+* use jkhl keys instead of c-u, c-d or something similiar
+
+* search up and down together
+
+* easily abort your "navigation"
+
 ## Installation
 
 ### Use [Vundle](https://github.com/gmarik/Vundle.vim)
