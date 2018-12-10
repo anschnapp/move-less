@@ -40,3 +40,25 @@ Any other key: Move less mode will directly be ended, but folding will be tempor
 As long as no jump or walk over the folding was taken the fold remains, if the move-less mode is activated again in such a situation it will just continue the last mode (by still using the actual folding). 
 This behavior could also be used for going into the move less mode again and make a clean abort of the mode by typing <esc>.
 
+MAPPINGS
+
+You are able to override the default mappings during MoveLess mode by providing
+a map through g:MoveLess#Mappings. Simply set the variable in your .vimrc, like
+the following example:
+
+let g:MoveLess#Mappings =
+  \   {
+  \     'FoldDown': 'i',
+  \     'FoldUp': 'o',
+  \     'UnfoldDown': 'I',
+  \     'UnfoldUp': 'O',
+  \     'FoldUpAndDownK1': 'h',
+  \     'FoldUpAndDownK2': 'N',
+  \     'UnfoldUpAndDownK1': 'n',
+  \     'UnfoldUpAndDownK2': 'H',
+  \     'StopMoveLess': 'p',
+  \     'UndoMoveLess': "\<Esc>"
+  \ }
+
+Note that you don't need to provide the whole map, only the entries that you want to
+replace.
