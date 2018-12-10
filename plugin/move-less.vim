@@ -1,3 +1,4 @@
+" If those mappings change, remember to update the documentation!
 let g:MoveLess#Mappings =
   \ extend(
   \   {

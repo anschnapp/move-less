@@ -43,7 +43,22 @@ This behavior could also be used for going into the move less mode again and mak
 MAPPINGS
 
 You are able to override the default mappings during MoveLess mode by providing
-a map through g:MoveLess#Mappings. Simply set the variable in your .vimrc, like
+a map through g:MoveLess#Mappings. This below is the DEFAULT map, for reference.
+
+{
+    'FoldDown': 'j',
+    'FoldUp': 'k',
+    'UnfoldDown': 'J',
+    'UnfoldUp': 'K',
+    'FoldUpAndDownK1': 'l',
+    'FoldUpAndDownK2': 'H',
+    'UnfoldUpAndDownK1': 'h',
+    'UnfoldUpAndDownK2': 'L',
+    'StopMoveLess': 'p',
+    'UndoMoveLess': "\<Esc>"
+}
+  
+To modify any of those shortcuts, simply set the variable in your .vimrc, like
 the following example:
 
 let g:MoveLess#Mappings =
@@ -52,10 +67,6 @@ let g:MoveLess#Mappings =
   \     'FoldUp': 'o',
   \     'UnfoldDown': 'I',
   \     'UnfoldUp': 'O',
-  \     'FoldUpAndDownK1': 'h',
-  \     'FoldUpAndDownK2': 'N',
-  \     'UnfoldUpAndDownK1': 'n',
-  \     'UnfoldUpAndDownK2': 'H',
   \     'StopMoveLess': 'p',
   \     'UndoMoveLess': "\<Esc>"
   \ }
