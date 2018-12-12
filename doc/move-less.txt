@@ -42,8 +42,8 @@ This behavior could also be used for going into the move less mode again and mak
 
 MAPPINGS
 
-You are able to override the default mappings during MoveLess mode by providing
-a map through g:MoveLess#Mappings. This below is the DEFAULT map, for reference.
+You are able to override the default mappings during MoveLess mode through
+the variable g:MoveLess#Mappings. This below is the DEFAULT dictionary, for reference.
 
 {
     'FoldDown': 'j',
@@ -58,8 +58,8 @@ a map through g:MoveLess#Mappings. This below is the DEFAULT map, for reference.
     'UndoMoveLess': "\<Esc>"
 }
   
-To modify any of those shortcuts, simply set the variable in your .vimrc, like
-the following example:
+To modify any of those shortcuts, simply set the variable in your .vimrc.
+Example:
 
 let g:MoveLess#Mappings =
   \   {

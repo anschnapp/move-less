@@ -51,6 +51,40 @@ This behavior could also be used for going into the move less mode again and mak
 
 After such an action the folding will be immediately removed. It is only intended to be used for navigation without moving.
 
+## Customizing the navigation shortcuts
+
+The key bindings mentioned above are controlled by the `g:MoveLess#Mappings`
+variable, which is a dictionary of actions and their activation keys.
+
+Below is the DEFAULT dictionary, for reference.
+
+{
+    'FoldDown': 'j',
+    'FoldUp': 'k',
+    'UnfoldDown': 'J',
+    'UnfoldUp': 'K',
+    'FoldUpAndDownK1': 'l',
+    'FoldUpAndDownK2': 'H',
+    'UnfoldUpAndDownK1': 'h',
+    'UnfoldUpAndDownK2': 'L',
+    'StopMoveLess': 'p',
+    'UndoMoveLess': "\<Esc>"
+}
+  
+To modify any of those shortcuts, simply set the variable in your .vimrc
+with only the keys you want to override. Example:
+
+let g:MoveLess#Mappings =
+  \   {
+  \     'FoldDown': 'i',
+  \     'FoldUp': 'o',
+  \     'UnfoldDown': 'I',
+  \     'UnfoldUp': 'O',
+  \     'StopMoveLess': 'L',
+  \     'UndoMoveLess': 'U'
+  \ }
+
+
 ## Scenarios, how this plugin might help you
 ### Faster navigaton without move
 Let's pretend our cursor is in the middle of a huge file (300 lines) lets say line number 150. And then we are searching for a function. But we are not sure about the function name, we are not even sure if it's located inside the current file at all.
