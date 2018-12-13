@@ -40,36 +40,44 @@ Any other key: Move less mode will directly be ended, but folding will be tempor
 As long as no jump or walk over the folding was taken the fold remains, if the move-less mode is activated again in such a situation it will just continue the last mode (by still using the actual folding). 
 This behavior could also be used for going into the move less mode again and make a clean abort of the mode by typing <esc>.
 
-MAPPINGS
+|MAPPINGS|
 
-You are able to override the default mappings during MoveLess mode through
-the variable g:MoveLess#Mappings. This below is the DEFAULT dictionary, for reference.
+The key bindings mentioned above are controlled by the *g:MoveLess#Mappings*
+variable, which is a dictionary of actions and their activation keys.
+
+Below is the DEFAULT dictionary, for reference.
 
 {
-    'FoldDown': 'j',
-    'FoldUp': 'k',
-    'UnfoldDown': 'J',
-    'UnfoldUp': 'K',
-    'FoldUpAndDownK1': 'l',
-    'FoldUpAndDownK2': 'H',
-    'UnfoldUpAndDownK1': 'h',
-    'UnfoldUpAndDownK2': 'L',
-    'StopMoveLess': 'p',
-    'UndoMoveLess': "\<Esc>"
+  'FoldBelow': 'j',
+  'FoldAbove': 'k',
+  'UnfoldBelow': 'J',
+  'UnfoldAbove': 'K',
+  'FoldAboveAndBelowK1': 'l',
+  'FoldAboveAndBelowK2': 'H',
+  'UnfoldAboveAndBelowK1': 'h',
+  'UnfoldAboveAndBelowK2': 'L',
+  'StopMoveLess': 'p',
+  'UndoMoveLess': "\<Esc>"
 }
   
-To modify any of those shortcuts, simply set the variable in your .vimrc.
-Example:
+You can override the shorcuts by substituting this dictionary for your own,
+like the example below.
 
 let g:MoveLess#Mappings =
   \   {
-  \     'FoldDown': 'i',
-  \     'FoldUp': 'o',
-  \     'UnfoldDown': 'I',
-  \     'UnfoldUp': 'O',
+  \     'FoldBelow': 'e',
+  \     'FoldAbove': 'i',
+  \     'UnfoldBelow': 'I',
+  \     'UnfoldAbove': 'E',
+  \     'FoldAboveAndBelowK1': 's',
+  \     'FoldAboveAndBelowK2': 'O',
+  \     'UnfoldAboveAndBelowK1': 'o',
+  \     'UnfoldAboveAndBelowK2': 'S',
   \     'StopMoveLess': 'p',
-  \     'UndoMoveLess': "\<Esc>"
-  \ }
+  \     'AbortMoveLess': "\<Esc>"
+  \   }
 
-Note that you don't need to provide the whole map, only the entries that you want to
-replace.
+Note that you need to provide the full dictionary through the *g:MoveLess#Mappings* variable.
+
+===============================================================================
+  vim:tw=80:ts=2:sts=2:sw=2:ft=help:norl:

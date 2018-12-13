@@ -71,18 +71,24 @@ Below is the DEFAULT dictionary, for reference.
     'UndoMoveLess': "\<Esc>"
 }
   
-To modify any of those shortcuts, simply set the variable in your .vimrc
-with only the keys you want to override. Example:
+You can override the shorcuts by substituting this dictionary for your own,
+like the example below.
 
 let g:MoveLess#Mappings =
   \   {
-  \     'FoldDown': 'i',
-  \     'FoldUp': 'o',
-  \     'UnfoldDown': 'I',
-  \     'UnfoldUp': 'O',
-  \     'StopMoveLess': 'L',
-  \     'UndoMoveLess': 'U'
-  \ }
+  \     'FoldBelow': 'e',
+  \     'FoldAbove': 'i',
+  \     'UnfoldBelow': 'I',
+  \     'UnfoldAbove': 'E',
+  \     'FoldAboveAndBelowK1': 's',
+  \     'FoldAboveAndBelowK2': 'O',
+  \     'UnfoldAboveAndBelowK1': 'o',
+  \     'UnfoldAboveAndBelowK2': 'S',
+  \     'StopMoveLess': 'p',
+  \     'AbortMoveLess': "\<Esc>"
+  \   }
+
+Note that you need to provide the full dictionary through the `g:MoveLess#Mappings` variable.
 
 
 ## Scenarios, how this plugin might help you
