@@ -68,7 +68,7 @@ Below is the DEFAULT dictionary, for reference.
   'UnfoldAboveAndBelowK1': 'h',
   'UnfoldAboveAndBelowK2': 'L',
   'StopMoveLess': 'p',
-  'UndoMoveLess': "\<Esc>"
+  'AbortMoveLess': "\<Esc>"
 }
   
 You can override the shorcuts by substituting this dictionary for your own,
