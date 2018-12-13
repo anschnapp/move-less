@@ -59,16 +59,16 @@ variable, which is a dictionary of actions and their activation keys.
 Below is the DEFAULT dictionary, for reference.
 
 {
-    'FoldDown': 'j',
-    'FoldUp': 'k',
-    'UnfoldDown': 'J',
-    'UnfoldUp': 'K',
-    'FoldUpAndDownK1': 'l',
-    'FoldUpAndDownK2': 'H',
-    'UnfoldUpAndDownK1': 'h',
-    'UnfoldUpAndDownK2': 'L',
-    'StopMoveLess': 'p',
-    'UndoMoveLess': "\<Esc>"
+  'FoldBelow': 'j',
+  'FoldAbove': 'k',
+  'UnfoldBelow': 'J',
+  'UnfoldAbove': 'K',
+  'FoldAboveAndBelowK1': 'l',
+  'FoldAboveAndBelowK2': 'H',
+  'UnfoldAboveAndBelowK1': 'h',
+  'UnfoldAboveAndBelowK2': 'L',
+  'StopMoveLess': 'p',
+  'UndoMoveLess': "\<Esc>"
 }
   
 You can override the shorcuts by substituting this dictionary for your own,
