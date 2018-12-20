@@ -1,3 +1,20 @@
+" If those mappings change, remember to update the documentation!
+let g:MoveLess#Mappings = get(
+  \  g:,'MoveLess#Mappings',
+  \  {
+  \    'FoldBelow': 'j',
+  \    'FoldAbove': 'k',
+  \    'UnfoldBelow': 'J',
+  \    'UnfoldAbove': 'K',
+  \    'FoldAboveAndBelowK1': 'l',
+  \    'FoldAboveAndBelowK2': 'H',
+  \    'UnfoldAboveAndBelowK1': 'h',
+  \    'UnfoldAboveAndBelowK2': 'L',
+  \    'StopMoveLess': 'p',
+  \    'AbortMoveLess': "\<Esc>"
+  \  }
+  \ )
+
 function! s:CheckAfterCursorChanges() 
     if exists("b:moveLessCursorPosition") && b:moveLessCursorPosition[1]
         let l:currentLine = line(".")
@@ -15,8 +32,12 @@ function! s:CheckAfterCursorChanges()
     endif
 endfunction
 
+function! s:IsFoldKey(key)
+  return a:key ==# g:MoveLess#Mappings['FoldBelow'] || a:key ==# g:MoveLess#Mappings['FoldAbove'] || a:key ==# g:MoveLess#Mappings['FoldAboveAndBelowK1'] || a:key ==# g:MoveLess#Mappings['UnfoldAboveAndBelowK1'] || a:key ==# g:MoveLess#Mappings['FoldAboveAndBelowK2'] || a:key ==# g:MoveLess#Mappings['UnfoldAboveAndBelowK2']
+endfunction
+
 function! MoveLessMode()
-    let l:result = 'j' 
+    let l:result = g:MoveLess#Mappings['FoldBelow'] 
     if exists("b:moveLessModePermanentEnded") && b:moveLessModePermanentEnded
         if b:moveLessUpCount > 1
             call s:Unfold(1)
@@ -39,14 +60,14 @@ function! MoveLessMode()
     endif
 
     let l:mode = 'initial'
-    while l:result ==? 'j' || l:result ==? 'k' || l:result ==? 'l' || l:result ==? 'h'
+    while s:IsFoldKey(l:result)
         let l:result = ''
         while l:result == ''
             let l:result = nr2char(getchar(1))
             sleep 20m
         endwhile
         
-        if l:result ==? 'j' || l:result ==? 'k' || l:result ==? 'l' || l:result ==? 'h' || l:result ==# 'p'
+        if s:IsFoldKey(l:result) || l:result ==# g:MoveLess#Mappings['StopMoveLess']
             let l:result = nr2char(getchar())
         endif
 
@@ -54,7 +75,7 @@ function! MoveLessMode()
         let l:firstLine = 1
 
         
-        if l:result ==# 'j'
+        if l:result ==# g:MoveLess#Mappings['FoldBelow']
             if l:mode ==# 'down'
                 if l:endLine - b:moveLessCursorPosition[1] - b:moveLessDownCount > &scroll  
                     let b:moveLessDownCount = s:FoldAndAdjustCount(b:moveLessDownCount, &scroll, 0)
@@ -64,7 +85,7 @@ function! MoveLessMode()
             endif
             exec "normal! zt"
             redraw
-        elseif l:result ==# 'J'
+        elseif l:result ==# g:MoveLess#Mappings['UnfoldBelow']
             if l:mode ==# 'down'
                 if b:moveLessDownCount > 0
                     if b:moveLessDownCount > &scroll
@@ -79,7 +100,7 @@ function! MoveLessMode()
             endif
             exec "normal! zt"
             redraw
-        elseif l:result ==# 'k'
+        elseif l:result ==# g:MoveLess#Mappings['FoldAbove']
             if l:mode ==# 'up'
                 if  b:moveLessCursorPosition[1] - l:firstLine - b:moveLessUpCount > &scroll  
                     let b:moveLessUpCount = s:FoldAndAdjustCount(b:moveLessUpCount, &scroll, 1)
@@ -89,7 +110,7 @@ function! MoveLessMode()
             endif
             exec "normal! z-"
             redraw
-        elseif l:result ==# 'K'
+        elseif l:result ==# g:MoveLess#Mappings['UnfoldAbove']
             if l:mode ==# 'up'
                 if b:moveLessUpCount > 0
                     if b:moveLessUpCount > &scroll
@@ -104,7 +125,7 @@ function! MoveLessMode()
             endif
             exec "normal! z-"
             redraw
-        elseif l:result ==# 'l' || l:result ==# 'H'
+        elseif l:result ==# g:MoveLess#Mappings['FoldAboveAndBelowK1'] || l:result ==# g:MoveLess#Mappings['FoldAboveAndBelowK2']
             if l:mode ==# 'both'
                 if l:endLine - b:moveLessCursorPosition[1] - b:moveLessDownCount > &scroll/2  
                     let b:moveLessDownCount = s:FoldAndAdjustCount(b:moveLessDownCount, &scroll/2, 0)
@@ -117,7 +138,7 @@ function! MoveLessMode()
             endif
             exec "normal! z."
             redraw
-        elseif l:result ==# 'h' || l:result ==# 'L'
+        elseif l:result ==# g:MoveLess#Mappings['UnfoldAboveAndBelowK1'] || l:result ==# g:MoveLess#Mappings['UnfoldAboveAndBelowK2']
             if l:mode ==# 'both'
                 if b:moveLessDownCount > 0
                     if b:moveLessDownCount > &scroll/2
@@ -142,7 +163,7 @@ function! MoveLessMode()
             redraw
         endif
     endwhile
-    if l:result ==# "\<esc>"
+    if l:result ==# g:MoveLess#Mappings['AbortMoveLess']
         if b:moveLessUpCount > 1
             call s:Unfold(1)
         endif
@@ -150,7 +171,7 @@ function! MoveLessMode()
             call s:Unfold(0)
         endif
         unlet b:moveLessCursorPosition
-    elseif l:result ==# "p"
+    elseif l:result ==# g:MoveLess#Mappings['StopMoveLess']
         let b:moveLessModePermanentEnded = 1
         " if p is clicked the folding should be permaent until someone would clear it with move less mode <ESC> or make a new move less mode navigation
     else
@@ -197,4 +218,4 @@ function! s:Unfold(up)
 endfunction
 
 
-noremap <leader>m :call MoveLessMode()<cr>
+silent! noremap <unique> <leader>m :call MoveLessMode()<cr>

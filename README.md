@@ -51,6 +51,46 @@ This behavior could also be used for going into the move less mode again and mak
 
 After such an action the folding will be immediately removed. It is only intended to be used for navigation without moving.
 
+## Customizing the navigation shortcuts
+
+The key bindings mentioned above are controlled by the `g:MoveLess#Mappings`
+variable, which is a dictionary of actions and their activation keys.
+
+Below is the DEFAULT dictionary, for reference.
+
+{
+  'FoldBelow': 'j',
+  'FoldAbove': 'k',
+  'UnfoldBelow': 'J',
+  'UnfoldAbove': 'K',
+  'FoldAboveAndBelowK1': 'l',
+  'FoldAboveAndBelowK2': 'H',
+  'UnfoldAboveAndBelowK1': 'h',
+  'UnfoldAboveAndBelowK2': 'L',
+  'StopMoveLess': 'p',
+  'AbortMoveLess': "\<Esc>"
+}
+  
+You can override the shorcuts by substituting this dictionary for your own,
+like the example below.
+
+let g:MoveLess#Mappings =
+  \   {
+  \     'FoldBelow': 'e',
+  \     'FoldAbove': 'i',
+  \     'UnfoldBelow': 'I',
+  \     'UnfoldAbove': 'E',
+  \     'FoldAboveAndBelowK1': 's',
+  \     'FoldAboveAndBelowK2': 'O',
+  \     'UnfoldAboveAndBelowK1': 'o',
+  \     'UnfoldAboveAndBelowK2': 'S',
+  \     'StopMoveLess': 'p',
+  \     'AbortMoveLess': "\<Esc>"
+  \   }
+
+Note that you need to provide the full dictionary through the `g:MoveLess#Mappings` variable.
+
+
 ## Scenarios, how this plugin might help you
 ### Faster navigaton without move
 Let's pretend our cursor is in the middle of a huge file (300 lines) lets say line number 150. And then we are searching for a function. But we are not sure about the function name, we are not even sure if it's located inside the current file at all.
