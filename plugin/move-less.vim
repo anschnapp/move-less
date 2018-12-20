@@ -32,6 +32,10 @@ function! s:CheckAfterCursorChanges()
     endif
 endfunction
 
+function! s:IsFoldKey(key)
+  return a:key ==# g:MoveLess#Mappings['FoldBelow'] || a:key ==# g:MoveLess#Mappings['FoldAbove'] || a:key ==# g:MoveLess#Mappings['FoldAboveAndBelowK1'] || a:key ==# g:MoveLess#Mappings['UnfoldAboveAndBelowK1'] || a:key ==# g:MoveLess#Mappings['FoldAboveAndBelowK2'] || a:key ==# g:MoveLess#Mappings['UnfoldAboveAndBelowK2']
+endfunction
+
 function! MoveLessMode()
     let l:result = g:MoveLess#Mappings['FoldBelow'] 
     if exists("b:moveLessModePermanentEnded") && b:moveLessModePermanentEnded
@@ -56,14 +60,14 @@ function! MoveLessMode()
     endif
 
     let l:mode = 'initial'
-    while l:result ==? g:MoveLess#Mappings['FoldBelow'] || l:result ==? g:MoveLess#Mappings['FoldAbove'] || l:result ==? g:MoveLess#Mappings['FoldAboveAndBelowK1'] || l:result ==? g:MoveLess#Mappings['UnfoldAboveAndBelowK1']
+    while s:IsFoldKey(l:result)
         let l:result = ''
         while l:result == ''
             let l:result = nr2char(getchar(1))
             sleep 20m
         endwhile
         
-        if l:result ==? g:MoveLess#Mappings['FoldBelow'] || l:result ==? g:MoveLess#Mappings['FoldAbove'] || l:result ==? g:MoveLess#Mappings['FoldAboveAndBelowK1'] || l:result ==? g:MoveLess#Mappings['UnfoldAboveAndBelowK1'] || l:result ==# g:MoveLess#Mappings['StopMoveLess']
+        if s:IsFoldKey(l:result) || l:result ==# g:MoveLess#Mappings['StopMoveLess']
             let l:result = nr2char(getchar())
         endif
 
@@ -134,7 +138,7 @@ function! MoveLessMode()
             endif
             exec "normal! z."
             redraw
-        elseif l:result ==# g:MoveLess#Mappings['UnfoldAboveAndBelowK1'] || l:result ==# g:MoveLess#Mappings['FoldAboveAndBelowK2']
+        elseif l:result ==# g:MoveLess#Mappings['UnfoldAboveAndBelowK1'] || l:result ==# g:MoveLess#Mappings['UnfoldAboveAndBelowK2']
             if l:mode ==# 'both'
                 if b:moveLessDownCount > 0
                     if b:moveLessDownCount > &scroll/2
