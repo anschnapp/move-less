@@ -58,6 +58,7 @@ variable, which is a dictionary of actions and their activation keys.
 
 Below is the DEFAULT dictionary, for reference.
 
+```
 {
   'FoldBelow': 'j',
   'FoldAbove': 'k',
@@ -70,10 +71,12 @@ Below is the DEFAULT dictionary, for reference.
   'StopMoveLess': 'p',
   'AbortMoveLess': "\<Esc>"
 }
+```
   
 You can override the shorcuts by substituting this dictionary for your own,
 like the example below.
 
+```
 let g:MoveLess#Mappings =
   \   {
   \     'FoldBelow': 'e',
@@ -87,6 +90,7 @@ let g:MoveLess#Mappings =
   \     'StopMoveLess': 'p',
   \     'AbortMoveLess': "\<Esc>"
   \   }
+```
 
 Note that you need to provide the full dictionary through the `g:MoveLess#Mappings` variable.
 
