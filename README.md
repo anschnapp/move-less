@@ -109,7 +109,7 @@ If you dont have found something you can do the same in the down direction (j/J)
 
 If you like you could search in both directions at the same time (l / h).
 
-If you found your function you could jump or walk to it by simple use your prefered way to do it. (i like easymotion a lot for this step but it's not necessary). If you use a action which writes to the jumplist you could easily switch between source and target positoon afterwards.
+If you found your function you could jump or walk to it by simple use your prefered way to do it. (i like easymotion a lot for this step but it's not necessary). The navigation is recorded in the jumplist, so you could easily switch between source and target positon afterwards.
 
 If you have found nothing you can click ESC and you don't have even changed your positoon at all.
 

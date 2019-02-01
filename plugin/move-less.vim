@@ -26,6 +26,12 @@ function! s:CheckAfterCursorChanges()
             if b:moveLessDownCount > 1
                 call s:Unfold(0)
             endif
+
+            " jump to source line and back to here just for creating a jump entry
+            " (dont have to check if the user action have already created a action
+            " cause sequential duplicates are not recoreded)
+            call setpos('.', b:moveLessCursorPosition)
+            exec "normal! " . l:currentLine . "gg"
             unlet b:moveLessCursorPosition
             autocmd! moveLessListenIfJumpsEnded CursorMoved <buffer>
         endif
